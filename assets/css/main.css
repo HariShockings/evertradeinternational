@@ -1,0 +1,177 @@
+:root {
+    --color-primary: #1e02a5;
+    --color-secondary: #faff05;
+    --color-third: #f34432;
+    --color-background: #EEEEEE;
+    --color-accent: #76ABAE;
+    --color-highlight: #e29578;
+    --gradient-text: linear-gradient(45deg, var(--color-primary) 40%, var(--color-third) 60%);
+    --gradient-underline: linear-gradient(45deg, var(--color-primary) 40%, var(--color-secondary) 60%);
+
+}
+
+/* Example usage */
+body {
+    background-color: var(--color-background);
+    margin: 0px;
+    padding: auto;
+}
+
+.header {
+    color: var(--color-primary);
+}
+
+a{
+    display: block;
+    text-decoration: none;
+}
+
+.button {
+    background-color: var(--color-accent);
+    border: 2px solid var(--color-secondary);
+}
+
+.footer {
+    background-color: var(--color-secondary);
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially hidden */
+    width: 250px;
+    height: 100vh;
+    background-color: var(--color-primary); /* Use primary color for sidebar background */
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto; /* Enable scrollbar if content exceeds sidebar height */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.sidebar.show {
+    left: 0; /* Show sidebar */
+}
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.sidebar-close {
+    color: #fff; /* White color for close icon */
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    font-size: 24px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    color: #fff;
+    /*Whitecolorforsidebarlinks*/text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    -webkit-transition: background-color 0.3s ease;
+    -moz-transition: background-color 0.3s ease;
+    -ms-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: var(--color-accent); /* Highlight color on hover */
+}
+
+#content{
+    z-index: 1;
+}
+
+
+/* footer */
+
+.footer {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 50px 0;
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    width: calc(100% / 4);
+    padding: 0 20px;
+    margin-bottom: 30px;
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: var(--color-accent);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-highlight);
+}
+
+.footer-contact {
+    margin-bottom: 20px;
+}
+
+.footer-contact p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.footer-social {
+    margin-bottom: 20px;
+}
+
+.footer-social a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: var(--color-highlight);
+}
+
+.footer-text {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+}

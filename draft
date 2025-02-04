@@ -1,0 +1,59 @@
+<?php
+// Include the database configuration file
+include('config.php');
+
+// Check if the 'id' parameter is set in the URL
+if (isset($_GET['id'])) {
+    // Sanitize and validate the ID parameter
+    $propertyID = mysqli_real_escape_string($conn, $_GET['id']);
+
+    try {
+        // Prepare and execute the SQL query to fetch property details by ID
+        $query = "SELECT PropertyID, UserID, propertyLocation, type, Price, totalSpace, AvailableSpace, image, Image2, Image3, Description, AdvertiserID, DateTime FROM tbl_property WHERE PropertyID = '$propertyID' AND IsDeleted = 0";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            // Check if a row is returned
+            if (mysqli_num_rows($result) == 1) {
+                // Fetch the property details
+                $propertyData = mysqli_fetch_assoc($result);
+
+                // Fetch additional data (e.g., advertiser name)
+                $advertiserID = $propertyData['AdvertiserID'];
+                $advertiserQuery = "SELECT FirstName FROM tbl_user WHERE UserID = '$advertiserID'";
+                $advertiserResult = mysqli_query($conn, $advertiserQuery);
+
+                if ($advertiserResult && mysqli_num_rows($advertiserResult) == 1) {
+                    $advertiserData = mysqli_fetch_assoc($advertiserResult);
+                    $advertiserName = $advertiserData['FirstName'];  // Corrected column name here
+                } else {
+                    $advertiserName = "Unknown";
+                }
+
+                // Output the property details
+                echo "PropertyID: " . $propertyData['PropertyID'] . "<br>";
+                echo "UserID: " . $propertyData['UserID'] . "<br>";
+                echo "Image: <img src='../advertiser/img/" . $propertyData['image'] . "' alt='Property Image'><br>";
+                echo "Image2: <img src='../advertiser/img/" . $propertyData['Image2'] . "' alt='Property Image 2'><br>";
+                echo "Image3: <img src='../advertiser/img/" . $propertyData['Image3'] . "' alt='Property Image 3'><br>";
+                echo "Property Location: " . $propertyData['propertyLocation'] . "<br>";
+                echo "Price: " . $propertyData['Price'] . "<br>";
+                echo "Type: " . $propertyData['type'] . "<br>";
+                echo "Total Space: " . $propertyData['totalSpace'] . " person<br>";
+                echo "Available Space: " . $propertyData['AvailableSpace'] . " person<br>";
+                echo "Description: " . $propertyData['Description'] . "<br>";
+                echo "Advertiser Name: " . $advertiserName . "<br>";
+                echo "DateTime: " . $propertyData['DateTime'] . "<br>";
+            } else {
+                echo "Property not found.";
+            }
+        } else {
+            throw new Exception("Error executing query: " . mysqli_error($conn));
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+} else {
+    echo "Invalid request. Property ID is missing.";
+}
+?>
