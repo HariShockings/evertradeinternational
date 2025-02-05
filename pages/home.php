@@ -21,5 +21,4 @@
 </section>
 
 <section>
-<?php include_once('properties.php');?>
 </section>

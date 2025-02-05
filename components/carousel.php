@@ -3,7 +3,7 @@
     border: 0;
     padding: 15px 30px 15px 30px;
     border-radius: 0px 50px 50px 50px;
-    background-color: var(--color-accent) !important;
+    background-color: var(--color-primary);
     color: white;
     z-index: 1;
 }
@@ -20,9 +20,8 @@
 
 .custom-carousel-indicators {
     position: relative;
-    bottom: 20px;
-    right: 70px;
-    transform: translateX(-50%);
+    bottom: -30px;
+    left: 0px;
     list-style: none;
     display: flex;
     padding: 0;
@@ -103,34 +102,14 @@ if ($carouselResult->num_rows > 0) {
             <div class="ml-3">
                 <h1><?= htmlspecialchars($hero['title']); ?></h1>
                 <h2 class="font-weight-light text-md"><?= htmlspecialchars($hero['subtitle']); ?></h2>
-                <p style="color: var(--color-secondary);"><?= htmlspecialchars($hero['description']); ?></p>
-                <button class="btnExplore bg-dark"><?= htmlspecialchars($hero['button_text']); ?></button>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
-            <div id="carouselExample" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <?php foreach ($carouselItems as $index => $item) : ?>
-                        <div class="carousel-item <?= $index === 0 ? 'active' : ''; ?>">
-                            <img src="<?= htmlspecialchars($item['image_url']); ?>" class="d-block w-100"
-                                 alt="<?= htmlspecialchars($item['alt_text']); ?>"
-                                 onerror="this.onerror=null; this.src='assets/img/placeholder.jpg'">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Carousel Controls -->
-                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-
+                <p style="color: var(--color-accent);">
+                    <?= htmlspecialchars($hero['description']); ?>
+                </p>
+                <button class="btnExplore">
+                    <?= htmlspecialchars($hero['button_text']); ?>
+                </button>
                 <!-- Custom Carousel Indicators -->
-                <ul class="custom-carousel-indicators d-flex justify-content-center mb-0">
+                <ul class="custom-carousel-indicators d-flex mb-0">
                     <?php foreach ($carouselItems as $index => $item) : ?>
                         <li data-target="#carouselExample" data-slide-to="<?= $index; ?>" class="custom-carousel-indicator <?= $index === 0 ? 'active' : ''; ?>">
                             <img src="<?= htmlspecialchars($item['image_url']); ?>" 
@@ -141,15 +120,35 @@ if ($carouselResult->num_rows > 0) {
                 </ul>
             </div>
         </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="3000" data-touch="true" data-pause="false">
+                <div class="carousel-inner">
+                    <?php foreach ($carouselItems as $index => $item) : ?>
+                        <div class="carousel-item <?= $index === 0 ? 'active' : ''; ?>">
+                            <img src="<?= htmlspecialchars($item['image_url']); ?>" class="d-block w-100"
+                                 alt="<?= htmlspecialchars($item['alt_text']); ?>"
+                                 onerror="this.onerror=null; this.src='assets/img/placeholder.jpg'">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
 $(document).ready(function() {
-    // Ensure only one image is visible at a time
+    // Auto play carousel
+    $('#carouselExample').carousel({
+        interval: 3000,
+        ride: 'carousel',
+        wrap: true,
+        pause: false
+    });
+
     $('.carousel-item').each(function(index) {
         if (index !== 0) {
-            $(this).removeClass('active'); // Ensure only the first slide has 'active' class
+            $(this).removeClass('active');
         }
     });
 
@@ -163,5 +162,23 @@ $(document).ready(function() {
         $('.custom-carousel-indicators li').removeClass('active');
         $('.custom-carousel-indicators li[data-slide-to="' + activeIndex + '"]').addClass('active');
     });
+
+    // Enable drag functionality
+    $('#carouselExample').on('touchstart', function(event) {
+        var xClick = event.originalEvent.touches[0].pageX;
+        $(this).one('touchmove', function(event) {
+            var xMove = event.originalEvent.touches[0].pageX;
+            var sensitivityInPx = 5;
+            if (Math.floor(xClick - xMove) > sensitivityInPx) {
+                $(this).carousel('next');
+            } else if (Math.floor(xClick - xMove) < -sensitivityInPx) {
+                $(this).carousel('prev');
+            }
+        });
+        $(this).on('touchend', function() {
+            $(this).off('touchmove');
+        });
+    });
 });
 </script>
+

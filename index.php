@@ -44,7 +44,9 @@
     <div id="content">
         <!-- Dynamic content will be loaded here -->
     </div>
-
+    <footer class="footer">
+        <?php include('components/footer.php') ?>
+    </footer>
     <script src="assets/js/switchPage.js"></script>
     <script>
         $(document).ready(function() {
@@ -59,45 +61,6 @@
         });
     </script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-column">
-                <div class="footer-logo">Your Logo</div>
-                <div class="footer-links">
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Services</a>
-                    <a href="#">Portfolio</a>
-                    <a href="#">Contact Us</a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <div class="footer-contact">
-                    <h3>Contact Us</h3>
-                    <p>Email: info@example.com</p>
-                    <p>Phone: +1 234 567 890</p>
-                    <p>Address: 123 Street, City, Country</p>
-                </div>
-            </div>
-            <div class="footer-column">
-                <div class="footer-social">
-                    <h3>Follow Us</h3>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <div class="footer-text">
-                    &copy; 2024 Your Company. All rights reserved. | Designed by <a href="#" target="_blank">Your
-                        Name</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <script>
 
     </script>
