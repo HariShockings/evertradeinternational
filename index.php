@@ -1,10 +1,7 @@
 <?php 
     session_start();
-    // if (!isset($_SESSION['userID'])) {
-    //     // Redirect to the index.php page
-    //     header("Location: index.php");
-    //     exit(); // Stop further execution
-    // }
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindBodima</title>
+    <title>Ever Trade</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +22,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Alertify CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css">
+
+<!-- Alertify JS -->
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -34,36 +37,45 @@
 
     <!-- Owl Carousel JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://www.payhere.lk/lib/payhere.js"></script>
+
+    <link rel="stylesheet" href="assets/css/main.css">
 
 </head>
+
 
 <body>
     <?php include('components/navbar.php'); ?>
 
     <div id="content">
+        <?php
+if (isset($_SESSION['success_msg'])) {
+    echo "<script> 
+        alertify.success('" . $_SESSION['success_msg'] . "'); 
+    </script>";
+    unset($_SESSION['success_msg']); // Clear session message after displaying
+}
+
+if (isset($_SESSION['error_msg'])) {
+    echo "<script> 
+        alertify.error('" . $_SESSION['error_msg'] . "'); 
+    </script>";
+    unset($_SESSION['error_msg']); // Clear session message after displaying
+}
+?>
+
         <!-- Dynamic content will be loaded here -->
     </div>
-    <footer class="footer">
-        <?php include('components/footer.php') ?>
-    </footer>
-    <script src="assets/js/switchPage.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Toggle sidebar when sidebar toggle button is clicked
-            $('.navbar-toggler').on('click', function() {
-                $('.sidebar').toggleClass('show');
-            });
-            // Close sidebar when sidebar close button is clicked
-            $('.sidebar-close').on('click', function() {
-                $('.sidebar').removeClass('show');
-            });
-        });
-    </script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script>
 
-    </script>
+    <footer class="footer">
+        <?php include('components/footer.php'); ?>
+    </footer>
+
+
+    <script> window.chtlConfig = { chatbotId: "3138336768" } </script>
+    <script async data-id="3138336768" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    <script src="assets/js/switchPage.js"></script>
+    <script src="assets/js/script.js"></script>
+
 </body>
 
 </html>

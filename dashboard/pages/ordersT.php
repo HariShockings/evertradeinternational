@@ -80,7 +80,7 @@ if ($orderResult && mysqli_num_rows($orderResult) > 0) {
         echo '<td>' . $orderRow['Stts'] . '</td>';
         echo '<td class="actionBtn">';
         // Action buttons for update and delete
-        echo '<a href="functions/update_order.php?id=' . $orderRow['OrderID'] . '" class="btn btn-primary"><i class="fas fa-pen"></i></a>';
+        echo '<a href="functions/update_nav_order.php?id=' . $orderRow['OrderID'] . '" class="btn btn-primary"><i class="fas fa-pen"></i></a>';
         echo '<a href="functions/delete_order.php?id=' . $orderRow['OrderID'] . '" class="btn btn-danger ml-1"><i class="fas fa-trash-alt"></i></a>';
         if ($orderRow['Stts'] == 'pending') {
             echo '<button class="btn btn-success changeStatusBtn ml-1" data-id="' . $orderRow['OrderID'] . '">✓</button>';

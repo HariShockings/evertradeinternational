@@ -17,8 +17,40 @@
 </style>
 
 <section id="hero">
-<?php include_once('../components/carousel.php'); ?>
+<?php include('../components/carousel.php'); ?>
 </section>
 
-<section>
+<section id="aboutus" class="bg-light py-2">
+<?php
+// another-page.php
+
+include('../components/about.php');
+
+// Display only specific sections
+displayAboutUsComponent([
+    'abt-data-1' => false,
+    'abt-data-2' => true,
+    'abt-data-3' => true,
+    'abt-data-4' => false,
+    'abt-data-5' => true,
+    'abt-data-6' => false
+]);
+?>
+</section>
+
+<section id="contactus" class="mt-2">
+<?php
+// contact-page.php
+
+include('../components/contact.php');
+
+// Display only specific sections
+displayContactComponent([
+    'contact-data-1' => false,
+    'contact-data-2' => true,
+    'contact-data-3' => true,
+    'contact-data-4' => false,
+    'contact-data-5' => false
+]);
+?>
 </section>

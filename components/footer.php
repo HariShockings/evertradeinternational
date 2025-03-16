@@ -9,15 +9,12 @@ $owner = mysqli_fetch_assoc($result);
 
 <div class="footer-inner">
     <div class="footer-column">
-        <div class="footer-logo">
-            <img src="<?php echo $owner['logo']; ?>" alt="<?php echo $owner['name']; ?>" width="50px">
-        </div>
         <div class="footer-links">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Services</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Contact Us</a>
+            <?php foreach ($menu_items as $item) : ?>
+                    <a href="#" data-page="<?= $item['page_slug']; ?>">
+                        <?= htmlspecialchars($item['title']); ?>
+                    </a>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="footer-column">
@@ -29,18 +26,21 @@ $owner = mysqli_fetch_assoc($result);
         </div>
     </div>
     <div class="footer-column">
+        <div class="footer-logo">
+            <img src="<?php echo 'uploads/' . $owner['logo']; ?>" alt="<?php echo $owner['name']; ?>" width="50px">
+        </div>
+        <h3>Follow Us</h3>
         <div class="footer-social">
-            <h3>Follow Us</h3>
-            <?php if ($owner['facebook']) echo "<a href='{$owner['facebook']}' target='_blank'><i class='fab fa-facebook-f'></i></a>"; ?>
-            <?php if ($owner['twitter']) echo "<a href='{$owner['twitter']}' target='_blank'><i class='fab fa-twitter'></i></a>"; ?>
-            <?php if ($owner['instagram']) echo "<a href='{$owner['instagram']}' target='_blank'><i class='fab fa-instagram'></i></a>"; ?>
-            <?php if ($owner['linkedin']) echo "<a href='{$owner['linkedin']}' target='_blank'><i class='fab fa-linkedin'></i></a>"; ?>
-            <?php if ($owner['whatsapp']) echo "<a href='https://wa.me/{$owner['whatsapp']}' target='_blank'><i class='fab fa-whatsapp'></i></a>"; ?>
+            <?php if ($owner['facebook']) echo "<a class='footer-social-a' href='{$owner['facebook']}' target='_blank'><i class='fab fa-facebook-f'></i></a>"; ?>
+            <?php if ($owner['twitter']) echo "<a class='footer-social-a' href='{$owner['twitter']}' target='_blank'><i class='fab fa-twitter'></i></a>"; ?>
+            <?php if ($owner['instagram']) echo "<a class='footer-social-a' href='{$owner['instagram']}' target='_blank'><i class='fab fa-instagram'></i></a>"; ?>
+            <?php if ($owner['linkedin']) echo "<a class='footer-social-a' href='{$owner['linkedin']}' target='_blank'><i class='fab fa-linkedin'></i></a>"; ?>
+            <?php if ($owner['whatsapp']) echo "<a class='footer-social-a' href='https://wa.me/{$owner['whatsapp']}' target='_blank'><i class='fab fa-whatsapp'></i></a>"; ?>
         </div>
     </div>
     <div class="footer-bottom">
         <div class="footer-text">
-            &copy; 2024 <?php echo $owner['name']; ?>. All rights reserved. | Designed by <a href="#" target="_blank">Your Name</a>
+            &copy; 2024 <?php echo $owner['name']; ?>. All rights reserved. | Designed by <a href="#" target="_blank">HariShockings</a>
         </div>
     </div>
 </div>

@@ -1,12 +1,10 @@
 <style>
-    .btnExplore {
-    border: 0;
-    padding: 15px 30px 15px 30px;
+.btnExplore { 
     border-radius: 0px 50px 50px 50px;
-    background-color: var(--color-primary);
-    color: white;
-    z-index: 1;
+    padding: 15px 20px;
+    border: 0;
 }
+
 .carousel-item {
     justify-content: center;
     align-items: center;
@@ -49,10 +47,16 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    transform: scale(0.8);
+    transition: all 0.2s ease;
 }
 
 .custom-carousel-indicator.active {
     background-color: var(--color-accent);
+}
+
+.custom-carousel-indicator.active img{
+    transform: scale(1);
 }
 
 .navbarBottom {
@@ -105,14 +109,14 @@ if ($carouselResult->num_rows > 0) {
                 <p style="color: var(--color-accent);">
                     <?= htmlspecialchars($hero['description']); ?>
                 </p>
-                <button class="btnExplore">
+                <a class="btn btn-def btnExplore" id="loadProducts" data-page="products.php">
                     <?= htmlspecialchars($hero['button_text']); ?>
-                </button>
+                </a>
                 <!-- Custom Carousel Indicators -->
                 <ul class="custom-carousel-indicators d-flex mb-0">
                     <?php foreach ($carouselItems as $index => $item) : ?>
                         <li data-target="#carouselExample" data-slide-to="<?= $index; ?>" class="custom-carousel-indicator <?= $index === 0 ? 'active' : ''; ?>">
-                            <img src="<?= htmlspecialchars($item['image_url']); ?>" 
+                            <img src="uploads/<?= htmlspecialchars($item['image_url']); ?>" 
                                  alt="<?= htmlspecialchars($item['alt_text']); ?>"
                                  onerror="this.onerror=null; this.src='assets/img/placeholder.jpg'">
                         </li>
@@ -125,7 +129,7 @@ if ($carouselResult->num_rows > 0) {
                 <div class="carousel-inner">
                     <?php foreach ($carouselItems as $index => $item) : ?>
                         <div class="carousel-item <?= $index === 0 ? 'active' : ''; ?>">
-                            <img src="<?= htmlspecialchars($item['image_url']); ?>" class="d-block w-100"
+                            <img src="uploads/<?= htmlspecialchars($item['image_url']); ?>" class="d-block w-100"
                                  alt="<?= htmlspecialchars($item['alt_text']); ?>"
                                  onerror="this.onerror=null; this.src='assets/img/placeholder.jpg'">
                         </div>

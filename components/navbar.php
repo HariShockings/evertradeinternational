@@ -59,7 +59,7 @@
 }
 
 .navbar-nav > .nav-item:last-child > .nav-link:hover {
-    background-color: var(--color-third);
+    background-color: var(--color-highlight);
     color: #fff;
 }
 
@@ -94,7 +94,7 @@ $ownerQuery = "SELECT logo, name FROM tbl_owner LIMIT 1";
 $ownerResult = $conn->query($ownerQuery);
 if ($ownerResult->num_rows > 0) {
     $ownerData = $ownerResult->fetch_assoc();
-    $logo = $ownerData['logo'] ?? 'assets/img/placeholder.jpg';
+    $logo = 'uploads/'. $ownerData['logo'] ?? 'assets/img/placeholder.jpg';
     $companyName = $ownerData['name'] ?? 'Company Name';
 } else {
     $logo = 'assets/img/placeholder.jpg';
@@ -105,7 +105,7 @@ $conn->close();
 ?>
 
 <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#" id="homeBtn" data-page="home.php">
         <img src="<?= htmlspecialchars($logo); ?>" alt="Company Logo" height="50px">
         <?= htmlspecialchars($companyName); ?>
     </a>
@@ -117,7 +117,9 @@ $conn->close();
         <ul class="navbar-nav ml-auto">
             <?php foreach ($menu_items as $item) : ?>
                 <li class="nav-item">
-                    <a class="nav-link badge-pill" href="#" data-page="<?= $item['page_slug']; ?>">
+                    <a class="nav-link badge-pill" 
+                       href="#<?= strtolower(str_replace(' ', '', htmlspecialchars($item['title']))); ?>" 
+                       <?= !empty($item['page_slug']) ? 'data-page="' . htmlspecialchars($item['page_slug']) . '"' : ''; ?>>
                         <?= htmlspecialchars($item['title']); ?>
                     </a>
                 </li>
@@ -125,8 +127,6 @@ $conn->close();
         </ul>
     </div>
 </nav>
-
-
 
 <!-- Sidebar -->
 <div class="sidebar">
