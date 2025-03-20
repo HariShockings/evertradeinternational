@@ -25,9 +25,18 @@ $productResult = $conn->query($productQuery);
         <div class="">
             <input type="text" id="searchInput" class="form-control" placeholder="Search products..." aria-label="Search">
         </div>
-        <button class="btn btn-sm btn-primary mx-3" onclick="showAddForm()"> 
+        <div class="d-flex align-items-start justify-content-space">
+        <button class="btn btn-sm btn-primary" onclick="showAddForm()"> 
             <i class="fas fa-plus"></i> Add New
         </button>
+        <!-- New Export Buttons -->
+        <button class="btn btn-sm btn-success" onclick="exportToExcel()"> 
+            <i class="fas fa-file-excel"></i> Export
+        </button>
+        <button class="btn btn-sm btn-danger" onclick="exportToPDF()"> 
+            <i class="fas fa-file-pdf"></i> Export
+        </button>
+        </div>
     </div>
     <!-- Product Form (Hidden by default) -->
     <div class="card mb-4 product-form" id="productForm" style="display: none;">
@@ -89,7 +98,7 @@ $productResult = $conn->query($productQuery);
     </div>
 
     <!-- Products Table -->
-    <table class="table table-bordered w-auto">
+    <table class="table table-bordered w-auto" id="productsTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -124,6 +133,11 @@ $productResult = $conn->query($productQuery);
     </table>
 </div>
 
+<!-- jsPDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- jsPDF AutoTable Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 <script>
 // Global images array to store image URLs for the form
 var imagesArray = [];
@@ -376,4 +390,72 @@ $(document).ready(function() {
 
 // Pass categories array to JavaScript for inline quick edit dropdowns
 var categories = <?php echo json_encode($catArray); ?>;
+
+// Function to export table data to Excel (excluding the "Actions" column)
+function exportToExcel() {
+    const table = document.getElementById('productsTable');
+    const rows = table.querySelectorAll('tr');
+    const data = [];
+
+    // Loop through rows and exclude the "Actions" column
+    rows.forEach((row, rowIndex) => {
+        const rowData = [];
+        const cols = row.querySelectorAll('td, th');
+
+        cols.forEach((col, colIndex) => {
+            // Skip the "Actions" column (last column)
+            if (colIndex < cols.length - 1) {
+                rowData.push(col.innerText);
+            }
+        });
+
+        data.push(rowData);
+    });
+
+    // Convert data to worksheet
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Products");
+    XLSX.writeFile(wb, "products.xlsx");
+}
+
+// Function to export table data to PDF (excluding the "Actions" column)
+function exportToPDF() {
+    // Ensure jsPDF is available
+    const { jsPDF } = window.jspdf;
+
+    // Initialize jsPDF
+    const doc = new jsPDF();
+
+    const table = document.getElementById('productsTable');
+    const headers = [];
+    const rows = [];
+
+    // Extract headers (excluding the "Actions" column)
+    table.querySelectorAll('thead th').forEach((th, index) => {
+        if (index < table.querySelectorAll('thead th').length - 1) {
+            headers.push(th.innerText);
+        }
+    });
+
+    // Extract rows (excluding the "Actions" column)
+    table.querySelectorAll('tbody tr').forEach((tr) => {
+        const rowData = [];
+        tr.querySelectorAll('td').forEach((td, index) => {
+            if (index < tr.querySelectorAll('td').length - 1) {
+                rowData.push(td.innerText);
+            }
+        });
+        rows.push(rowData);
+    });
+
+    // Generate PDF using autoTable
+    doc.autoTable({
+        head: [headers],
+        body: rows,
+    });
+
+    // Save the PDF
+    doc.save('products.pdf');
+}
 </script>

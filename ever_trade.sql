@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2025 at 10:13 AM
+-- Generation Time: Mar 20, 2025 at 07:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -62,11 +62,12 @@ CREATE TABLE `tbl_carousel` (
 --
 
 INSERT INTO `tbl_carousel` (`id`, `image_url`, `alt_text`, `display_order`) VALUES
-(1, 'assets/img/t1.png', 'assets/img/t1.png', 1),
-(2, 'assets/img/t2.png', 'Hardware 2', 2),
-(3, 'assets/img/t3.png', 'Hardware 3', 3),
-(4, 'assets/img/t4.png', 'Hardware 4', 4),
-(5, 'assets/img/t5.png', 'Hardware 5', 5);
+(1, 't1.png', 'bgyhkibkb', 1),
+(2, 't2.png', 'Hardware 2', 2),
+(3, 't3.png', 'Hardware 3', 3),
+(4, 't4.png', 'Hardware 4', 4),
+(5, 't5.png', 'Hardware 5', 5),
+(9, '67dada9f94956_362615731_252149267587326_6201485608611506429_n.jpg', 'harii', 6);
 
 -- --------------------------------------------------------
 
@@ -85,9 +86,8 @@ CREATE TABLE `tbl_category` (
 
 INSERT INTO `tbl_category` (`id`, `name`) VALUES
 (3, 'Electrical'),
-(2, 'Hand Tools'),
-(1, 'Power Tools'),
-(4, 'svvab');
+(1, 'Hand Tools'),
+(2, 'Power Tools');
 
 -- --------------------------------------------------------
 
@@ -112,12 +112,12 @@ CREATE TABLE `tbl_hardware` (
 --
 
 INSERT INTO `tbl_hardware` (`id`, `name`, `images`, `description`, `price`, `stock`, `category_id`, `page_slug`, `use_cases`) VALUES
-(1, 'Drill Machine', '[\"p1.png\", \"p1_2.png\"]', 'High precision and power for all drilling needs. \nPerfect for professional and DIY projects.\nErgonomic design for comfortable handling. ', 120.00, 10, 1, 'drill-machine', 'adghfjhkgjkjlkjvcfgvmhb,jn.,hbmhvgn\nHigh precision and power for all drilling needs. \nPerfect for professional and DIY projects.\nErgonomic design for comfortable handling'),
+(1, 'Drill Machine', '[\"../uploads/1742121638_362615731_252149267587326_6201485608611506429_n.jpg\"]', 'High precision and power for all drilling needs. Perfect for professional and DIY projects.Ergonomic design for comfortable handling. ', 30.00, 100, 1, 'drill-machine', 'abc'),
 (2, 'Circular Saw', '[\"p2.png\", \"p2_2.png\"]', 'High-speed circular saw.', 150.00, 0, 1, 'circular-saw', NULL),
-(3, 'Wrench Set', '[\"p3.png\", \"p3_2.png\"]', 'Set of adjustable wrenches.', 50.00, 15, 2, 'wrench-set', NULL),
-(4, 'Hammer', '[\"p4.png\", \"p4_2.png\"]', 'Heavy-duty steel hammer.', 20.00, 30, 2, 'hammer', NULL),
+(3, 'Wrench Set', '[\"p3.png\",\" p3_2.png\"]', 'Set of adjustable wrenches.', 50.00, 150, 2, 'wrench-set', ''),
+(4, 'Hammer', '[\"p4.png\", \"p4_2.png\"]', 'Heavy-duty steel hammer.', 20.00, 30, 1, 'hammer', NULL),
 (5, 'Electric Plug', '[\"p5.png\", \"p5_2.png\"]', 'Universal electric plug.', 5.00, 100, 3, 'electric-plug', NULL),
-(6, 'Light Bulb', '[\"p6.png\", \"p6_2.png\"]', 'LED energy-saving bulb.', 8.00, 50, 3, 'light-bulb', NULL);
+(6, 'Light Bulb', '[\"p6.png\",\"p6_2.png\"]', 'LED energy-saving bulb.', 8.00, 50, 2, 'light-bulb', 'vavavvavb');
 
 -- --------------------------------------------------------
 
@@ -182,9 +182,11 @@ CREATE TABLE `tbl_leadership` (
 --
 
 INSERT INTO `tbl_leadership` (`id`, `name`, `position`, `image_url`, `quote`) VALUES
-(1, 'John Doe', 'CEO', 'assets/img/placeholder.jpg', 'Leadership is not about titles, it\'s about impact.'),
-(2, 'Jane Smith', 'CTO', 'assets/img/placeholder.jpg', 'Innovation is the heart of technology.'),
-(3, 'Mark Johnson', 'Vice CEO', 'assets/img/placeholder.jpg', 'Success comes from teamwork and dedication.');
+(1, 'John Doe', 'CEO', '', 'Leadership is not about titles, it\'s about impact.'),
+(2, 'Jane Smith', 'CTO', 'placeholder.jpg', 'Innovation is the heart of technology.'),
+(5, 'Jane Smith', 'CTOo', '67dbab16dd9f2_362615731_252149267587326_6201485608611506429_n.jpg', 'Innovation is the heart of technology.'),
+(11, 'Jane Smith', 'ggg', '67dbad84e4d1f_362615731_252149267587326_6201485608611506429_n.jpg', 'Innovation is the heart of technology.'),
+(13, 'wfehbsrh', 'CTOo', '67dbb190d32b2_photo-1535713875002-d1d0cf377fde.jpeg', 'dndmnd');
 
 -- --------------------------------------------------------
 
@@ -234,6 +236,29 @@ INSERT INTO `tbl_navbar` (`id`, `title`, `page_slug`, `display_order`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_orders`
+--
+
+CREATE TABLE `tbl_orders` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `order_amount` decimal(10,2) NOT NULL,
+  `status` enum('pending','done') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tbl_orders`
+--
+
+INSERT INTO `tbl_orders` (`id`, `product_id`, `quantity`, `order_amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 12, 1440.00, 'done', '2025-03-09 07:04:18', '2025-03-09 07:25:57');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_owner`
 --
 
@@ -258,7 +283,7 @@ CREATE TABLE `tbl_owner` (
 --
 
 INSERT INTO `tbl_owner` (`id`, `name`, `logo`, `contact`, `email`, `location`, `facebook`, `twitter`, `instagram`, `linkedin`, `whatsapp`, `office_time`, `google_map_link`) VALUES
-(1, 'Ever Trade International', 'assets/img/evlogo.png', '+94 771234567', 'info@evertrade.com', 'Colombo, Sri Lanka', 'https://facebook.com/evertrade', 'https://twitter.com/evertrade', 'https://instagram.com/evertrade', 'https://linkedin.com/company/evertrade', '+94771234567', 'Mon - Fri: 9:00 AM - 5:00 PM', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.81597678079!2d79.77826335115893!3d6.921832307550433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo!5e0!3m2!1sen!2slk!4v1740459686840!5m2!1sen!2slk');
+(1, 'Ever Trade International', '67c58a98daad9_evlogo.png', '+94 771234567', 'info@evertrade.com', 'Colombo, Sri Lanka', 'https://facebook.com/evertrade', 'https://twitter.com/evertrade', 'https://instagram.com/evertrade', 'https://linkedin.com/company/evertrade', '+94771234567', 'Mon - Fri: 9:00 AM - 5:00 PM', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.81597678079!2d79.77826335115893!3d6.921832307550433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo!5e0!3m2!1sen!2slk!4v1740459686840!5m2!1sen!2slk');
 
 -- --------------------------------------------------------
 
@@ -280,8 +305,8 @@ CREATE TABLE `tbl_pages` (
 --
 
 INSERT INTO `tbl_pages` (`id`, `pages`, `heading`, `description`, `img_url`, `alt_text`) VALUES
-(1, 'about_us', 'ABOUT US', 'We are a leading company in the hardware industry, committed to providing top-quality products and services. With a focus on durability, innovation, and cost-effectiveness, we offer a wide range of tools, equipment, and building materials for professionals and DIY enthusiasts.', 'assets/img/rods-city.png', 'rod-city'),
-(2, 'contact_us', 'CONTACT US', 'We are a leading company in the hardware industry, committed to providing top-quality products and services. With a focus on durability, innovation, and cost-effectiveness, we offer a wide range of tools, equipment, and building materials for professionals and DIY enthusiasts.', 'assets/img/contact.png', 'rod-city');
+(1, 'about_us', 'ABOUT US', 'We are a leading company in the hardware industry, committed to providing top-quality products and services. With a focus on durability, innovation, and cost-effectiveness, we offer a wide range of tools, equipment, and building materials for professionals and DIY enthusiasts.', 'rods-city.png', 'rod-city'),
+(2, 'contact_us', 'CONTACT US', 'We are a leading company in the hardware industry, committed to providing top-quality products and services. With a focus on durability, innovation, and cost-effectiveness, we offer a wide range of tools, equipment, and building materials for professionals and DIY enthusiasts.', 'contact.png', 'rod-city');
 
 -- --------------------------------------------------------
 
@@ -317,7 +342,28 @@ INSERT INTO `tbl_review` (`id`, `hardware_id`, `reviewer_name`, `rating`, `descr
 (12, 6, 'Emma Lewis', 4, 'Good product overall, but could be improved.', '2025-02-23 08:15:21'),
 (13, 1, 'df d', 2, 'sfbsbsfb sfb', '2025-02-24 05:50:55'),
 (14, 1, 'sgsrbsfb', 5, 'bsfbsbsb', '2025-02-24 05:54:11'),
-(15, 3, 'mgjmcjm,chj,mhj,m,j', 1, 'gjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm', '2025-02-24 08:07:45');
+(15, 3, 'mgjmcjm,chj,mhj,m,j', 1, 'gjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm\r\ngjmg,mxgjgmgmgjmmhm', '2025-02-24 08:07:45'),
+(16, 3, 'ghgj', 4, 'fhchcj', '2025-03-16 10:37:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user`
+--
+
+CREATE TABLE `tbl_user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`id`, `username`, `email`, `password`) VALUES
+(1, 'admin', 'admin@123.com', '$2y$10$DJQZ11QiAii46qVJcKjL5OxQuEnD4.5gT6aK/EU015X4C9HsEiiTq');
 
 --
 -- Indexes for dumped tables
@@ -380,6 +426,13 @@ ALTER TABLE `tbl_navbar`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `tbl_owner`
 --
 ALTER TABLE `tbl_owner`
@@ -399,6 +452,13 @@ ALTER TABLE `tbl_review`
   ADD KEY `hardware_id` (`hardware_id`);
 
 --
+-- Indexes for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -412,19 +472,19 @@ ALTER TABLE `tbl_achievements`
 -- AUTO_INCREMENT for table `tbl_carousel`
 --
 ALTER TABLE `tbl_carousel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_hardware`
 --
 ALTER TABLE `tbl_hardware`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_hero`
@@ -442,7 +502,7 @@ ALTER TABLE `tbl_icons`
 -- AUTO_INCREMENT for table `tbl_leadership`
 --
 ALTER TABLE `tbl_leadership`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_mission_vision`
@@ -454,7 +514,13 @@ ALTER TABLE `tbl_mission_vision`
 -- AUTO_INCREMENT for table `tbl_navbar`
 --
 ALTER TABLE `tbl_navbar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_owner`
@@ -472,7 +538,13 @@ ALTER TABLE `tbl_pages`
 -- AUTO_INCREMENT for table `tbl_review`
 --
 ALTER TABLE `tbl_review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -483,6 +555,12 @@ ALTER TABLE `tbl_review`
 --
 ALTER TABLE `tbl_hardware`
   ADD CONSTRAINT `tbl_hardware_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `tbl_category` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  ADD CONSTRAINT `tbl_orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tbl_hardware` (`id`);
 
 --
 -- Constraints for table `tbl_review`

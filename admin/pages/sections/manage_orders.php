@@ -25,16 +25,18 @@ $orderResult = $conn->query($orderQuery);
         <div class="">
             <input type="text" id="searchInput" class="form-control" placeholder="Search orders..." aria-label="Search">
         </div>
-        <button class="btn btn-sm btn-primary mx-3" onclick="showAddForm()"> 
+        <div class="d-flex justify-content-between align-items-start">
+        <button class="btn btn-sm btn-primary" onclick="showAddForm()"> 
             <i class="fas fa-plus"></i> Add New
         </button>
         <!-- New Export Buttons -->
-        <button class="btn btn-sm btn-success mx-3" onclick="exportToExcel()"> 
+        <button class="btn btn-sm btn-success" onclick="exportToExcel()"> 
             <i class="fas fa-file-excel"></i> Export to Excel
         </button>
-        <button class="btn btn-sm btn-danger mx-3" onclick="exportToPDF()"> 
+        <button class="btn btn-sm btn-danger" onclick="exportToPDF()"> 
             <i class="fas fa-file-pdf"></i> Export to PDF
         </button>
+        </div>
     </div>
     <!-- Order Form (Hidden by default) -->
     <div class="card mb-4 order-form" id="orderForm" style="display: none;">

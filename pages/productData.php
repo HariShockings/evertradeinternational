@@ -135,6 +135,10 @@ if (isset($_GET['product'])) {
 
         $formattedDescription = formatTextWithPoints($product['description']);
         $formattedUseCases = formatTextWithPoints($product['use_cases']);
+
+        $ownerResult = $conn->query("SELECT contact FROM tbl_owner LIMIT 1");
+        $owner = $ownerResult->fetch_assoc();
+
         ?>
         
 <div class="container my-5">
@@ -199,7 +203,9 @@ if (isset($_GET['product'])) {
                         </div>
 
                         <div class="d-flex align-items-center justify-content-between mt-4">
-                            <button class="btn btn-danger"><i class="fas fa-phone mr-2" style="transform: rotate(90deg);"></i> Inquire Now</button>
+                        <a class="btn btn-danger" href="tel:<?php echo htmlspecialchars($owner['contact']); ?>">
+                            <i class="fas fa-phone mr-2" style="transform: rotate(90deg);"></i> Inquire Now
+                        </a>
                             <button class="btn btn-def"><i class="fas fa-robot mr-2"></i> Ask Assitant</button>
                         </div>
                     </div>

@@ -12,6 +12,16 @@
                     Manage Owner Info
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-carousel-tab" data-bs-toggle="tab" data-bs-target="#manage-carousel" type="button" role="tab" aria-controls="manage-carousel" aria-selected="false">
+                    Manage Carousel
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-leadership-tab" data-bs-toggle="tab" data-bs-target="#manage-leadership" type="button" role="tab" aria-controls="manage-leadership" aria-selected="false">
+                    Manage Leadership
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -21,6 +31,12 @@
             </div>
             <div class="tab-pane fade" id="manage-owner-info" role="tabpanel" aria-labelledby="manage-owner-info-tab">
                 <?php include('sections/manage_owner_info.php'); ?>
+            </div>
+            <div class="tab-pane fade" id="manage-carousel" role="tabpanel" aria-labelledby="manage-carousel-tab">
+                <?php include('sections/manage_carousel.php'); ?>
+            </div>
+            <div class="tab-pane fade" id="manage-leadership" role="tabpanel" aria-labelledby="manage-leadership-tab">
+                <?php include('sections/manage_leadership.php'); ?>
             </div>
         </div>
     </div>
