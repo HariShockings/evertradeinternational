@@ -173,42 +173,44 @@ if (isset($_GET['product'])) {
         <div class="col-md-6">
             <div class="product-card mt-sm-4 mt-md-0 mt-lg-0">
                 <div class="product-details">
-                    <!-- Front Side (Product Details) -->
-                    <div class="product-front p-4 bg-light rounded">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <h2 class="mt-2"><?= htmlspecialchars($product['name']); ?></h2>
-                            <a class="hardware-filter-link d-flex align-items-center"><?= htmlspecialchars($product['category']); ?></a>
-                            <i class="fas fa-comments pd-review-icon"></i>
-                        </div>
-                        <p class="price mb-2"><strong>Price:</strong> $<?= number_format($product['price'], 2); ?></p>
-                        <p class="<?= ($product['stock'] > 0) ? 'stock' : 'out-of-stock'; ?> mb-2">
-                            <strong>Stock:</strong> <?= ($product['stock'] > 0) ? $product['stock'] . ' Available' : 'Out of Stock'; ?>
-                        </p>
+                   <!-- Front Side (Product Details) -->
+<div class="product-front p-4 bg-light rounded">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2 class="mt-2"><?= htmlspecialchars($product['name']); ?></h2>
+        <a class="hardware-filter-link d-flex align-items-center"><?= htmlspecialchars($product['category']); ?></a>
+        <i class="fas fa-comments pd-review-icon"></i>
+    </div>
+    <p class="price mb-2"><strong>Price:</strong> $<?= number_format($product['price'], 2); ?></p>
+    <p class="<?= ($product['stock'] > 0) ? 'stock' : 'out-of-stock'; ?> mb-2">
+        <strong>Stock:</strong> <?= ($product['stock'] > 0) ? $product['stock'] . ' Available' : 'Out of Stock'; ?>
+    </p>
 
-                        <div class="pd-tab-container">
-                            <input type="radio" id="pd-desc-tab" name="pd-tab-control" checked>
-                            <label for="pd-desc-tab">Product Description</label>
+    <div class="pd-tab-container">
+        <input type="radio" id="pd-desc-tab" name="pd-tab-control" checked>
+        <label for="pd-desc-tab">Product Description</label>
 
-                            <input type="radio" id="pd-usecases-tab" name="pd-tab-control">
-                            <label for="pd-usecases-tab">Use Cases</label>
+        <input type="radio" id="pd-usecases-tab" name="pd-tab-control">
+        <label for="pd-usecases-tab">Use Cases</label>
 
-                            <div class="pd-content">
-                                <div class="pd-tab-content" id="pd-desc">
-                                    <p><?= $formattedDescription; ?></p>
-                                </div>
-                                <div class="pd-tab-content" id="pd-usecases">
-                                    <p><?= $formattedUseCases; ?></p>
-                                </div>
-                            </div>
-                        </div>
+        <div class="pd-content">
+            <div class="pd-tab-content" id="pd-desc">
+                <p><?= $formattedDescription; ?></p>
+            </div>
+            <div class="pd-tab-content" id="pd-usecases">
+                <p><?= $formattedUseCases; ?></p>
+            </div>
+        </div>
+    </div>
 
-                        <div class="d-flex align-items-center justify-content-between mt-4">
-                        <a class="btn btn-danger" href="tel:<?php echo htmlspecialchars($owner['contact']); ?>">
-                            <i class="fas fa-phone mr-2" style="transform: rotate(90deg);"></i> Inquire Now
-                        </a>
-                            <button class="btn btn-def"><i class="fas fa-robot mr-2"></i> Ask Assitant</button>
-                        </div>
-                    </div>
+    <div class="d-flex align-items-center justify-content-between mt-4">
+        <a class="btn btn-danger" href="tel:<?php echo htmlspecialchars($owner['contact']); ?>">
+            <i class="fas fa-phone mr-2" style="transform: rotate(90deg);"></i> Inquire Now
+        </a>
+        <button class="btn btn-def" id="askAssistant">
+            <i class="fas fa-robot mr-2"></i> Ask Assistant
+        </button>
+    </div>
+</div>
 
                     <!-- Back Side (Reviews) -->
                     <div class="product-back">
@@ -271,7 +273,8 @@ if (isset($_GET['product'])) {
                                     <div class="col-lg-6 col-md-12 col-sm-12">
                                     <input type="text" name="reviewer_name" class="form-control" placeholder="Your Name" required>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 rating-stars d-flex mt-sm-3 mt-md-0 mt-lg-0">                                        <input type="hidden" name="rating" id="ratingValue" value="5">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 rating-stars d-flex mt-sm-3 mt-md-0 mt-lg-0">                                        
+                                        <input type="hidden" name="rating" id="ratingValue" value="0" required>
                                         <i class="fas fa-star fs-4 text-secondary mx-1" data-value="1"></i>
                                         <i class="fas fa-star fs-4 text-secondary mx-1" data-value="2"></i>
                                         <i class="fas fa-star fs-4 text-secondary mx-1" data-value="3"></i>
@@ -385,5 +388,107 @@ $conn->close();
             }
         });
     });
+    $('.rating-stars i').on('click', function() {
+        var rating = $(this).data('value');
+        $('#ratingValue').val(rating);
+
+        $('.rating-stars i').removeClass('text-warning').addClass('text-secondary');
+        $(this).prevAll().addBack().removeClass('text-secondary').addClass('text-warning');
     });
+
+    $('form').on('submit', function(e) {
+        var name = $('input[name="reviewer_name"]').val().trim();
+        var review = $('textarea[name="description"]').val().trim();
+        var rating = $('#ratingValue').val();
+
+        var nameRegex = /^[A-Za-z\s]{2,50}$/; // Only letters, spaces, and min 2, max 50 chars
+        var reviewRegex = /^[A-Za-z0-9\s.,!?]{5,300}$/; // Allows letters, numbers, spaces, punctuation (min 5, max 300 chars)
+
+        if (rating == "0") {
+            alert("Please select a star rating before submitting.");
+            e.preventDefault();
+            return false;
+        }
+
+        if (!nameRegex.test(name)) {
+            alert("Please enter a valid name (letters only, 2-50 characters).");
+            e.preventDefault();
+            return false;
+        }
+
+        if (!reviewRegex.test(review)) {
+            alert("Please enter a valid review (at least 5 characters, no special symbols except punctuation).");
+            e.preventDefault();
+            return false;
+        }
+    });
+// Chatbot configuration
+window.chtlConfig = { chatbotId: "3138336768" };
+
+// Load the Chatling embed script
+const script = document.createElement('script');
+script.async = true;
+script.dataset.id = "3138336768";
+script.id = "chatling-embed-script";
+script.type = "text/javascript";
+script.src = "https://chatling.ai/js/embed.js";
+document.head.appendChild(script);
+
+// Function to open the chatbot and simulate user input
+function openChatbot() {
+    // Check if the chatbot script is loaded and has the necessary API
+    if (window.Chatling && window.Chatling.open) {
+        // Open the chatbot
+        window.Chatling.open();
+
+        // Wait for the chatbot to load and find the input field
+        const waitForChatbotInput = setInterval(function () {
+            const chatbotInput = document.querySelector('.chtl-message-input'); // Selector for the textarea
+            const sendButton = document.querySelector('.chtl-send-button'); // Selector for the send button (if it exists)
+
+            if (chatbotInput) {
+                clearInterval(waitForChatbotInput);
+
+                // Prepare the product details message
+                const productName = "<?= addslashes($product['name']); ?>";
+                const productDescription = "<?= addslashes($formattedDescription); ?>";
+                const productPrice = "<?= number_format($product['price'], 2); ?>";
+                const productStock = "<?= ($product['stock'] > 0) ? $product['stock'] . ' Available' : 'Out of Stock'; ?>";
+
+                const message = `Tell me about this product:\n\nName: ${productName}\nDescription: ${productDescription}\nPrice: $${productPrice}\nStock: ${productStock}`;
+
+                // Populate the chatbot input field with the message
+                chatbotInput.value = message;
+
+                // Trigger input and change events to ensure the chatbot recognizes the input
+                const inputEvent = new Event('input', { bubbles: true });
+                const changeEvent = new Event('change', { bubbles: true });
+                chatbotInput.dispatchEvent(inputEvent);
+                chatbotInput.dispatchEvent(changeEvent);
+
+                // If a send button exists, click it to send the message
+                if (sendButton) {
+                    sendButton.click();
+                } else {
+                    // Simulate the "Enter" key to send the message
+                    const enterEvent = new KeyboardEvent('keydown', {
+                        key: 'Enter',
+                        code: 'Enter',
+                        bubbles: true,
+                    });
+                    chatbotInput.dispatchEvent(enterEvent);
+                }
+            }
+        }, 500); // Check every 500ms for the input field
+    } else {
+        console.error("Chatling chatbot is not loaded or does not have an open method.");
+    }
+}
+
+// Attach click event to the "Ask Assistant" button
+$('#askAssistant').on('click', function () {
+    openChatbot();
+});
+    });
+
 </script>

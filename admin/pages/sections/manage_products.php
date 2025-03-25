@@ -77,7 +77,7 @@ $productResult = $conn->query($productQuery);
                     </div>
                     <div class="col-md-6">
                         <label>Use Cases</label>
-                        <input type="textarea" class="form-control" id="use_cases">
+                        <textarea class="form-control" id="use_cases" rows="2"></textarea>
                     </div>
                     <!-- Images Section -->
                     <div class="col-md-12 mt-3">

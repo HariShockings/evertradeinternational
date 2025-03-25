@@ -75,7 +75,6 @@ if (isset($_SESSION['error_msg'])) {
     <script async data-id="3138336768" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
     <script src="assets/js/switchPage.js"></script>
     <script src="assets/js/script.js"></script>
-
 </body>
 
 </html>

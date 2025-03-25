@@ -5,7 +5,7 @@
         <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="website.php">Web Site</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="products.php">Products</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="orders.php">Orders</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="reports.php">Reports</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="inquries.php">Inquries</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-white sidebar-link" data-page="settings.php">Settings</a></li>
         <li class="nav-item"><a href="functions/logout.php" class="nav-link text-whiter">Logout</a></li>
     </ul>

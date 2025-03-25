@@ -100,7 +100,7 @@ function displayContactComponent($show = ['contact-data-1' => true, 'contact-dat
             <div class="col-md-8">
                 <div class="contact-page-form bg-light p-5 rounded shadow-sm">
                     <h3 class="text-center mb-4">Get in Touch</h3>
-                    <form action="contact-mail.php" method="post">
+                    <form action="functions/contact-mail.php" method="post">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <input type="text" class="form-control" name="name" placeholder="Your Name" required>
@@ -142,5 +142,37 @@ function displayContactComponent($show = ['contact-data-1' => true, 'contact-dat
 </div> <!-- Close container -->
 <?php
 }
-
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('form').on('submit', function(e) {
+            var name = $('input[name="name"]').val().trim();
+            var email = $('input[name="email"]').val().trim();
+            var message = $('textarea[name="message"]').val().trim();
+
+            var nameRegex = /^[A-Za-z\s]{2,50}$/; // Only letters and spaces (2-50 characters)
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Standard email format
+            var messageRegex = /^[A-Za-z0-9\s.,!?]{5,300}$/; // Allows letters, numbers, punctuation (5-300 characters)
+
+            if (!nameRegex.test(name)) {
+                alert("Please enter a valid name (only letters, max 50 characters).");
+                e.preventDefault();
+                return false;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                e.preventDefault();
+                return false;
+            }
+
+            if (!messageRegex.test(message)) {
+                alert("Please enter a valid message (at least 5 characters, no excessive special symbols).");
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+
+</script>
